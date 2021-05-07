@@ -1,30 +1,30 @@
-import mapper.IncomeFillMapper;
+import mapper.RatingFillMapper;
 import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.fs.Path;
 import org.apache.hadoop.io.Text;
 import org.apache.hadoop.mapreduce.Job;
 import org.apache.hadoop.mapreduce.lib.input.FileInputFormat;
 import org.apache.hadoop.mapreduce.lib.output.FileOutputFormat;
-import reducer.IncomeFillReducer;
+import reducer.RatingFillReducer;
 
 import java.io.IOException;
 
-public class IncomeFill {
+public class RatingFill {
     public static void main(String[] args) throws IOException, InterruptedException, ClassNotFoundException {
         Configuration conf = new Configuration();
-        Job job = Job.getInstance(conf, "income fill");
+        Job job = Job.getInstance(conf, "rating fill");
         // jar
-        job.setJarByClass(IncomeFill.class);
+        job.setJarByClass(RatingFill.class);
         // mapper
-        job.setMapperClass(IncomeFillMapper.class);
+        job.setMapperClass(RatingFillMapper.class);
         job.setMapOutputKeyClass(Text.class);
         job.setMapOutputValueClass(Text.class);
-        FileInputFormat.setInputPaths(job, new Path("/input/fill/income/fill"));
+        FileInputFormat.setInputPaths(job, new Path("/input/fill/rating/fill"));
         // reducer
-        job.setReducerClass(IncomeFillReducer.class);
+        job.setReducerClass(RatingFillReducer.class);
         job.setMapOutputKeyClass(Text.class);
         job.setMapOutputValueClass(Text.class);
-        FileOutputFormat.setOutputPath(job, new Path("/output/fill/income/fill"));
+        FileOutputFormat.setOutputPath(job, new Path("/output/fill/rating/fill"));
         // submit
         job.waitForCompletion(true);
     }
