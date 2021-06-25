@@ -50,6 +50,16 @@ public class FormatReducer extends Reducer<Text, Text, Text, Text> {
             }
             line = line.replace(words[4], reviewDate);
             line = line.replace(words[8], birthday);
+
+            String temperature = words[5];
+            double temperatureValue = Double.parseDouble(temperature.substring(0, temperature.length()-1));
+            String temperatureType = temperature.substring(temperature.length()-1);
+            if (temperatureType.equals("℉")) {
+                temperatureValue = (temperatureValue - 32) / 1.8;
+                temperature = temperatureValue + "℃";
+            }
+            line = line.replace(words[5], temperature);
+
             context.write(new Text(line), new Text(""));
         }
     }
